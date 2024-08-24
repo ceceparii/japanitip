@@ -50,11 +50,11 @@ export default function ProductDetail({ product: initialProduct }) {
                     <h3>Variant</h3>
                     {product.variants?.map((variant, index) => (
                         <button
+                            key={index}
                             className={`${
                                 current === index && "btn-red"
                             } py-1 px-2.5 border text-sm mr-2.5`}
                             onClick={() => setCurrent(index)}
-                            key={index}
                         >
                             {variant.name}
                         </button>

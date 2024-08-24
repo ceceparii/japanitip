@@ -126,11 +126,12 @@ export default function CreateProduct() {
                     </div>
                     <div className="p-3.5 bg-white rounded-2xl shadow my-3.5">
                         <div className="font-semibold">Variant</div>
-                        {variants?.map((variant) => (
+                        {variants?.map((variant, index) => (
                             <InputVariants
                                 variant={variant}
                                 variants={variants}
                                 setVariants={setVariants}
+                                key={index}
                             />
                         ))}
                         <button
