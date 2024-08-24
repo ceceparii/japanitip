@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #202020;
+  --background: #F9FAFB;
+  --white: #FFFDF5;
+  --black: #202020;
+  --red-primer: #EF233C;
+  --red-scunder: #D90429;
+  --red-tersier: #FECACA;
+  --gray-primer: #F3F4F6;
+  --yellow-primer: #fef9c3;
+  --yellow-scunder: #ca8a04;
+  --green-primer: #dcfce7;
+  --green-scunder: #16a34a;
+  --blue-primer: #dbeafe;
+  --blue-scunder: #3b82f6;
+  --orange-primer: #ffedd5;
+  --orange-scunder: #f97316;
+}
+
+/* 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+} */
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-size: 14px;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+h1, h2, h3 {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+.btn {
+  font-weight: 600;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid;
+}
+
+.btn-transparent {
+  border-color: var(--black);
+  &:hover {
+    background: var(--gray-primer);
+  }
+}
+
+.btn-red {
+  background-color: var(--red-primer);
+  color: var(--white);
+  border-color: var(--red-primer);
+  &:hover {
+    background-color: var(--red-scunder);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transfrom: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 3s linear infinite;
+}
