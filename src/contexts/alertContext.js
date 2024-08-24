@@ -12,7 +12,7 @@ const initialState = {
     type: ""
 }
 
-export default function ({children}){
+export default function AlertProvider({children}){
     const [isAlert, setIsAlert] = useState(initialState)
 
     function showAlert({ message, type }){

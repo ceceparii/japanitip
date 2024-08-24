@@ -4,7 +4,7 @@ import { convertToIDR } from "@/utils/priceHandler";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function () {
+export default function Products() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export default function () {
 
         fetchProducts();
     }, []);
-    console.log(products);
+
     return (
         <main>
             {products?.map((product) => (

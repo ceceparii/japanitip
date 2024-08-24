@@ -2,7 +2,7 @@ import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 
-export default function ({ imageChange, thumbnails }) {
+export default function InputImage({ imageChange, thumbnails }) {
     return (
         <section className="shadow rounded-2xl p-3.5 bg-white">
             <div className="font-semibold mb-3.5">Gambar produk</div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { InputField } from "../common/inputField";
 import { validateObject } from "@/utils/validateObject";
 
-export default function ({ variant, variants, setVariants, productID }) {
+export default function InputVariants({ variant, variants, setVariants, productID }) {
     const [errors, setErrors] = useState([]);
     const [isFocus, setIsFocus] = useState(false);
 

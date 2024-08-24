@@ -21,7 +21,7 @@ const initialVariant = {
     price: "2500",
 };
 
-export default function () {
+export default function CreateProduct() {
     const router = useRouter();
     const [product, setProduct] = useState(initialState);
     const [errors, setErrors] = useState([]);

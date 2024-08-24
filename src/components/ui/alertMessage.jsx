@@ -2,7 +2,7 @@ import { useAlert } from "@/contexts/alertContext";
 import { faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function(){
+export default function AlertMessage(){
     const {isAlert, setIsAlert} = useAlert()
     const { background: color, color: background } = statusColor(isAlert.type)
 

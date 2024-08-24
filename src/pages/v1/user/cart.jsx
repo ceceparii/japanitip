@@ -123,7 +123,7 @@ function CartPage() {
 }
 
 
-export default function () {
+export default function UserCart() {
     return (
         <>
             <CartProvider>

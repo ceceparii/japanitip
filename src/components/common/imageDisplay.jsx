@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function ({ src, className, imageStyle }) {
+export default function ImageDisplay({ src, className, imageStyle }) {
     return (
         <figure className={`${className} relative`}>
             <Image
