@@ -38,7 +38,7 @@ export async function middleware(req, res) {
 
     // validate token
     if(refreshToken === null || !refreshToken ){
-        return NextResponse.redirect(new URL('/login', req.url))
+        return NextResponse.redirect(new URL('/login', process.env.BASE_URL))
     }
     
     try {
@@ -76,7 +76,7 @@ export async function middleware(req, res) {
             }
         }
         
-        return NextResponse.redirect(new URL('/login', req.url))
+        return NextResponse.redirect(new URL('/login', process.env.BASE_URL))
     } catch (error) {
         console.error('middleware', error);
         return NextResponse.json(
