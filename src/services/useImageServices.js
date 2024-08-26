@@ -48,6 +48,7 @@ export default function useImageServices(thumbnails) {
             return await getDownloadURL(storageRef);
         });
 
+        // eslint-disable-next-line
         return Promise.all(uploadPromises);
     }
 

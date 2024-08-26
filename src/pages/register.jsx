@@ -21,7 +21,7 @@ export default function () {
 
   // change handler
   function changeHandler(event) {
-    const regex = /[^a-zA-Z0-9.,\/\s]/g;
+    const regex = /^[a-zA-Z0-9 ]*$/ // eslint-disable
     const { name, value } = event.target;
 
     setRegistData((prev) => ({

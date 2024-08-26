@@ -2,6 +2,7 @@
 import productSchema from "@/models/productSchema";
 import userSchema from "@/models/userSchema";
 import connectToDatabase from '@/libs/mongodb'
+import { NextResponse } from "next/server";
 
 export default async function userCart(req, res){
     const _userID = req.headers["id"];
