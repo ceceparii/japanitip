@@ -37,8 +37,8 @@ export async function middleware(req) {
     }
 
     // validate token
-    if(!refreshToken){
-        return NextResponse.redirect(new URL('/login', req.url))
+    if(refreshToken === null || !refreshToken ){
+        return NextResponse.redirect(url.origin + '/login')
     }
     
     try {
@@ -55,7 +55,7 @@ export async function middleware(req) {
             
             if(refreshToken) {
                 if(refreshToken.role !== 'admin') {
-                    return NextResponse.redirect(new URL('/404', req.url))
+                    return NextResponse.redirect(url.origin + '/404')
                 }
                 
                 response.headers.set('id', refreshToken._userID);
@@ -64,7 +64,7 @@ export async function middleware(req) {
                 return response;
             }
            
-            return NextResponse.redirect(new URL('/login', req.url))
+            return NextResponse.redirect(url.origin + '/login')
         }
         
         if(url.pathname.startsWith('/v1/user')) {
@@ -77,7 +77,7 @@ export async function middleware(req) {
                 return response;
             }
            
-            return NextResponse.redirect(new URL('/login', req.url))
+            return NextResponse.redirect(url.origin + '/login')
         }
         
         return NextResponse.json({ status: 401 })

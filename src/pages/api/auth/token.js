@@ -9,13 +9,13 @@ export default async function accessToken(req, res) {
     try {
         let refreshToken = req.cookies.auth
         if(!refreshToken) {
-            return NextResponse.redirect(new URL('/login', req.url))
+            return NextResponse.redirect(url.origin + '/login')
         } 
         await connectToDatabase()
         const user = await User.findOne({ refreshToken })
         
         if(!user) {
-            return NextResponse.redirect(new URL('/login', req.url))
+            return NextResponse.redirect(url.origin + '/login')
         }
 
         const payload = { _userID: user._id, role: user.role}

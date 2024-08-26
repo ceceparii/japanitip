@@ -4,8 +4,8 @@ import { NextResponse } from "next/server"
 
 export default async function userData(req, res) {
     const _userID = req.headers['id']
-
-    if(!_userID) return NextResponse.redirect(new URL('/login', req.url))
+    
+    if(!_userID) return NextResponse.redirect(req.nextUrl.origin + '/login')
 
     try {
         await connectToDatabase()
