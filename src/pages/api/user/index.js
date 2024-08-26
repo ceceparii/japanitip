@@ -1,11 +1,10 @@
 import connectToDatabase from "@/libs/mongodb"
 import User from "@/models/userSchema"
-import { redirect } from "next/navigation"
 
 export default async function userData(req, res) {
     const _userID = req.headers['id']
     
-    if(!_userID) redirect('/login')
+    if(!_userID) return res.status(403).json({ message: 'Unauthorized' })
 
     try {
         await connectToDatabase()
