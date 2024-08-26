@@ -1,6 +1,5 @@
 import Header from '@/components/common/header';
-import connectToDatabase from '@/libs/mongodb';
-import userSchema from '@/models/userSchema';
+import useFetchData from '@/services/useFetchData';
 import {
     faAngleRight,
     faGear,
@@ -10,6 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 function LinkTo(props) {
     return (
@@ -26,11 +26,18 @@ function LinkTo(props) {
     );
 }
 
-export default function Profile({ user }) {
-    const {username, phone} = JSON.parse(user)
+export default function Profile() {
+    const {loading, result, fetchData} = useFetchData()
+
+    useEffect(() => {
+        fetchData('/api/user')
+    }, [])
+
+    if(loading) return null
+
     return (
         <>
-            <Header backPath={'/v1/user/profile'}>
+            <Header backPath={'/v1'}>
                 Profile pengguna
             </Header>
             <main className='p-3.5 capitalize'>
@@ -40,8 +47,8 @@ export default function Profile({ user }) {
                         className='text-4xl text-gray-600'
                     />
                     <span>
-                        <div className='font-semibold'>{username}</div>
-                        <div className='text-gray-600'>{phone}</div>
+                        <div className='font-semibold'>{result.username}</div>
+                        <div className='text-gray-600'>{result.phone}</div>
                     </span>
                 </section>
                 <section className='my-3.5 bg-white p-3.5 rounded-xl shadow'>
@@ -58,39 +65,4 @@ export default function Profile({ user }) {
             </main>
         </>
     );
-}
-
-export async function getServerSideProps({ req }) {
-    let redirect = {
-        destination: '/login',
-        permanent: false
-    }
-    try {
-        const refreshToken = req.cookies.auth;
-
-        if (!refreshToken) {
-            return { redirect }
-        }
-        
-        await connectToDatabase();
-        let user = await userSchema.findOne({ refreshToken }).select([ 'username', 'phone' ]);
-        
-        if(!user) {
-            return { redirect }
-        }
-        
-        return {
-            props: {
-                user: JSON.stringify(user),
-            },
-        };
-    } catch (error) {
-        console.error('profile page :', error.message);
-        return {
-            redirect: {
-                destination: '/login',
-                permanent: false
-            },
-        };
-    }
 }
