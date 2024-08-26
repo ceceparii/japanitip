@@ -59,7 +59,7 @@ export default function () {
       <h1>Buat akun baru</h1>
       <div className="text-gray-600">
         Sudah punya akun ?{" "}
-        <Link href={"/auth/login"} className="font-semibold text-blue-600">
+        <Link href={"/login"} className="font-semibold text-blue-600">
           Login
         </Link>
       </div>

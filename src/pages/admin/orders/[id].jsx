@@ -4,10 +4,9 @@ import AdminLayout from "@/components/layout/adminLayout"
 import { idrFormat } from "@/utils/format"
 import useFetchData from "@/services/useFetchData"
 import { useEffect } from "react"
-import ImageDisplay from "@/components/common/imageDisplay"
 
 export default function OrderDetails(){
-    const {loading, fetchData, result, setResult} = useFetchData()
+    const {loading, fetchData, result } = useFetchData()
     const { query } = useRouter()
     
     useEffect(() => {

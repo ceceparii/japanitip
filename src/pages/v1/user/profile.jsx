@@ -1,7 +1,6 @@
 import Header from '@/components/common/header';
 import connectToDatabase from '@/libs/mongodb';
 import userSchema from '@/models/userSchema';
-import { verifyToken } from '@/utils/verifyToken';
 import {
     faAngleRight,
     faGear,
@@ -62,19 +61,22 @@ export default function Profile({ user }) {
 }
 
 export async function getServerSideProps({ req }) {
+    let redirect = {
+        destination: '/login',
+        permanent: false
+    }
     try {
-        await connectToDatabase();
         const refreshToken = req.cookies.auth;
+
+        if (!refreshToken) {
+            return { redirect }
+        }
         
+        await connectToDatabase();
         let user = await userSchema.findOne({ refreshToken }).select([ 'username', 'phone' ]);
         
         if(!user) {
-            return {
-                redirect: {
-                    destination: '/login',
-                    permanent: false
-                }
-            }
+            return { redirect }
         }
         
         return {

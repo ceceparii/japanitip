@@ -17,7 +17,7 @@ axiosIntelence.interceptors.request.use(
     },
     function (error) {
         console.error(error.message);
-        return Promise.reject(error);
+        return error
     }
 );
 

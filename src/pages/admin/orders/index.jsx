@@ -23,7 +23,7 @@ function OrderCard(props){
                 <div>{props.username}</div>
                 <div>{idrFormat.format(props.totalAmount)}</div>
                 <div style={{ background, color}} className='absolute right-2 top-2 p-1.5 rounded-md'>
-                    {props.status.replace('diproses', 'dibayar').replace('_', ' ')}
+                    {props.status?.replace('diproses', 'dibayar').replace('_', ' ')}
                 </div>
             </Link>
         </div>

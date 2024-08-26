@@ -7,7 +7,7 @@ import { validateObject } from "@/utils/validateObject";
 import { useRouter } from "next/router";
 
 const initialState = {
-    phone: "082320531435",
+    phone: "",
     password: "",
 };
 
@@ -51,7 +51,7 @@ export default function () {
             <div className="">
                 belum punya akun ?
                 <Link
-                    href={"/auth/register"}
+                    href={"/register"}
                     className="font-semibold text-blue-600 mx-2"
                 >
                     Datar

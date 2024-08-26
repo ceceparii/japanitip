@@ -8,6 +8,10 @@ export default function SelectPayment({onChange, errors}) {
         fetchData('/api/payment');
     }, []);
 
+    if (loading) {
+        return null
+    }
+
     return (
         <div className='bg-white p-3.5 rounded-xl shadow'>
             <h3 className='mb-3.5'>Metod pembayaran</h3>

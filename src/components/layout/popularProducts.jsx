@@ -1,6 +1,5 @@
 import axiosIntelence from "@/libs/axios";
 import { useEffect, useState } from "react";
-import ImageDisplay from "../common/imageDisplay";
 import ProductCard from "../ui/productCard";
 
 export default function PopularProducts() {

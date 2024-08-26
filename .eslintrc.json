@@ -5,6 +5,15 @@
         "next/core-web-vitals"
     ],
     "rules": {
-        "react/display-name": "off"
+        "react/display-name": "off",
+        "no-unused-vars": [
+            "warn",
+            {
+                "vars": "all",
+                "args": "none",
+                "ignoreRestSiblings": true
+            }
+        ],
+        "no-unsafe-optional-chaining": "warn"
     }
 }

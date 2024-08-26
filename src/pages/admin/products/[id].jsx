@@ -35,22 +35,11 @@ export default function ProductPage({ product: initialProduct }) {
     }
 
     async function submitHandler() {
-        let variants = sessionStorage.getItem(`variants-${product._id}`);
         let imgUrl = [];
 
         if (images.files?.length > 0) {
             imgUrl = await uploadImages(product);
         }
-
-        variants = variants?.reduce((newVariant, variant) => {
-            product.map((variantProduct) => {
-                if (variant._id !== variantProduct._id) {
-                    newVariant.push(variant);
-                }
-            });
-
-            return newVariant;
-        });
 
         const response = await axiosIntelence.put(
             `/api/products/${product._id}`,

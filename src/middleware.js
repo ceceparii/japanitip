@@ -46,8 +46,9 @@ export async function middleware(req) {
         }
 
         if(url.pathname.startsWith('/admin')) {
+            refreshToken = await verifyToken(refreshToken.value, REFRESH_TOKEN_SECRET);
+            
             if(refreshToken) {
-                refreshToken = await verifyToken(refreshToken.value, REFRESH_TOKEN_SECRET);
                 if(refreshToken.role !== 'admin') {
                     return NextResponse.redirect(new URL('/404', req.url))
                 }
@@ -62,9 +63,9 @@ export async function middleware(req) {
         }
         
         if(url.pathname.startsWith('/v1/user')) {
+            refreshToken = await verifyToken(refreshToken.value, REFRESH_TOKEN_SECRET);
+            
             if(refreshToken) {
-                refreshToken = await verifyToken(refreshToken.value, REFRESH_TOKEN_SECRET);
-                
                 response.headers.set('id', refreshToken._userID);
                 response.headers.set('role', refreshToken.role);
                 

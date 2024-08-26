@@ -8,7 +8,7 @@ import useFetchData from '@/services/useFetchData';
 import { useValidate } from '@/services/useValidate';
 import { convertToIDR } from '@/utils/priceHandler';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 function OrderDetail({ totalAmount }) {
 

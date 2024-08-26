@@ -1,7 +1,6 @@
 // /api/admin/orders/index.js
 import connectToDatabase from "@/libs/mongodb";
 import User from "@/models/userSchema";
-import { detailCartItem } from "@/utils/detailCartItems";
 
 export default async function userOrders(req, res) {
     try {
@@ -9,9 +8,7 @@ export default async function userOrders(req, res) {
             await connectToDatabase()
             const orders = await User.find({}).select(['orders'])
             const [result] = orders?.map((order) => order.orders)
-            
-            const cart = await detailCartItem(result.cart)
-            
+                        
             return res.status(200).json({ message: '', result })
         }
         
