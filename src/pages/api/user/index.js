@@ -1,10 +1,11 @@
 import connectToDatabase from "@/libs/mongodb"
 import User from "@/models/userSchema"
+import { NextResponse } from "next/server"
 
 export default async function userData(req, res) {
     const _userID = req.headers['id']
 
-    if(!_userID) return res.status(401).json({ message: 'Unauthorze' })
+    if(!_userID) return NextResponse.redirect(new URL('/login', req.url))
 
     try {
         await connectToDatabase()
