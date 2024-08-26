@@ -6,6 +6,8 @@ import { NextResponse } from "next/server";
 import { createToken } from "./login";
 
 export default async function accessToken(req, res) {
+    const url = req.nextUrl
+    
     try {
         let refreshToken = req.cookies.auth
         if(!refreshToken) {
