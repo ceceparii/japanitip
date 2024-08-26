@@ -35,6 +35,11 @@ export async function middleware(req) {
             { message: `${url.origin} is not allowed` }
         );
     }
+
+    // validate token
+    if(!refreshToken){
+        return NextResponse.redirect(new URL('/login', req.url))
+    }
     
     try {
         if (authToken) {
