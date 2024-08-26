@@ -2,22 +2,20 @@
 
 import connectToDatabase from "@/libs/mongodb";
 import User from "@/models/userSchema";
-import { NextResponse } from "next/server";
 import { createToken } from "./login";
+import { redirect } from "next/navigation";
 
 export default async function accessToken(req, res) {
-    const url = req.nextUrl
-    
     try {
         let refreshToken = req.cookies.auth
         if(!refreshToken) {
-            return NextResponse.redirect(url.origin + '/login')
+            redirect('/login')
         } 
         await connectToDatabase()
         const user = await User.findOne({ refreshToken })
         
         if(!user) {
-            return NextResponse.redirect(url.origin + '/login')
+            redirect('/login')
         }
 
         const payload = { _userID: user._id, role: user.role}

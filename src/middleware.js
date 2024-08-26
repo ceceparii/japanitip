@@ -16,7 +16,7 @@ async function verifyToken(token, secretKey) {
     }
 }
 
-export async function middleware(req) {
+export async function middleware(req, res) {
     const url = req.nextUrl;
     const response = NextResponse.next();
     const allowedOrigin = [
@@ -38,7 +38,7 @@ export async function middleware(req) {
 
     // validate token
     if(refreshToken === null || !refreshToken ){
-        return NextResponse.redirect(url.origin + '/login')
+        return NextResponse.redirect(new URL('/login', req.url))
     }
     
     try {
@@ -55,7 +55,7 @@ export async function middleware(req) {
             
             if(refreshToken) {
                 if(refreshToken.role !== 'admin') {
-                    return NextResponse.redirect(url.origin + '/404')
+                    return res.sendStatus(404)
                 }
                 
                 response.headers.set('id', refreshToken._userID);
@@ -63,8 +63,6 @@ export async function middleware(req) {
                 
                 return response;
             }
-           
-            return NextResponse.redirect(url.origin + '/login')
         }
         
         if(url.pathname.startsWith('/v1/user')) {
@@ -76,11 +74,9 @@ export async function middleware(req) {
                 
                 return response;
             }
-           
-            return NextResponse.redirect(url.origin + '/login')
         }
         
-        return NextResponse.json({ status: 401 })
+        return NextResponse.redirect(new URL('/login', req.url))
     } catch (error) {
         console.error('middleware', error);
         return NextResponse.json(

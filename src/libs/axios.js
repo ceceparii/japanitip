@@ -34,6 +34,9 @@ axiosIntelence.interceptors.response.use(
                 window.location.reload()
             }
         }
+        if (error.response?.status === 403) {
+            window.location.href = '/login'
+        }
         return error.response;
     }
 );

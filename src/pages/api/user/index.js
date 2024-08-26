@@ -1,11 +1,11 @@
 import connectToDatabase from "@/libs/mongodb"
 import User from "@/models/userSchema"
-import { NextResponse } from "next/server"
+import { redirect } from "next/navigation"
 
 export default async function userData(req, res) {
     const _userID = req.headers['id']
     
-    if(!_userID) return NextResponse.redirect(req.nextUrl.origin + '/login')
+    if(!_userID) redirect('/login')
 
     try {
         await connectToDatabase()
