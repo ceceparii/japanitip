@@ -16,7 +16,7 @@ export default function PopularProducts() {
 
     return (
         <div className="flex gap-3.5 overflow-scroll">
-            {products.map((product) => (
+            {products?.map((product) => (
                 <ProductCard key={product._id} {...product} />
             ))}
         </div>

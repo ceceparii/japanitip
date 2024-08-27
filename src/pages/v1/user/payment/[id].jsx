@@ -19,7 +19,7 @@ export default function PaymentPage() {
     }, [router.query.id]);
 
     if (loading) return null;
-    console.log(order);
+
     return (
         <>
             <header className='p-3.5 bg-white shadow flex gap-3.5 items-center'>

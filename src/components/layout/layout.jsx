@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ImageDisplay from "../common/imageDisplay";
 import { faAngleLeft, faCartShopping, faXmarkSquare } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Loading from "../common/loading";
@@ -13,9 +13,9 @@ export default function Layout({ children, loading }) {
     const [isLogin, setIsLogin] = useState(false)
     const router = useRouter();
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const login = localStorage.getItem('auth')
-        if(login) setIsLogin(true)
+        if(login !== null || login) setIsLogin(true)
     }, [])
     
     function AsideButton({ children, path }) {
@@ -33,6 +33,7 @@ export default function Layout({ children, loading }) {
         if (response.status === 200) {
             localStorage.removeItem('auth')
             router.push('/v1')
+            setIsLogin(false)
         }
         setIsAside(false)
     }

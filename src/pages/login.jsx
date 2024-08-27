@@ -35,14 +35,13 @@ export default function () {
 
         const response = await axios.post("/api/auth/login", loginData);
 
+        localStorage.setItem("auth", response.data.accessToken);
+        
+        router.push(response.data.role === "admin" ? "/admin" : "/");
         showAlert({
             type: response.status === 200 ? "success" : "error",
             message: response.data.message,
         });
-
-        localStorage.setItem("auth", response.data.accessToken);
-
-        router.push(response.data.role === "admin" ? "/admin" : "/");
     }
 
     return (

@@ -47,8 +47,8 @@ export default function Profile() {
                         className='text-4xl text-gray-600'
                     />
                     <span>
-                        <div className='font-semibold'>{result.username}</div>
-                        <div className='text-gray-600'>{result.phone}</div>
+                        <div className='font-semibold'>{result?.username}</div>
+                        <div className='text-gray-600'>{result?.phone}</div>
                     </span>
                 </section>
                 <section className='my-3.5 bg-white p-3.5 rounded-xl shadow'>

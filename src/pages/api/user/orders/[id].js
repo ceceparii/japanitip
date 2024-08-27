@@ -5,7 +5,6 @@ import connectToDatabase from "@/libs/mongodb";
 import paymentSchema from "@/models/paymentSchema";
 import User from "@/models/userSchema";
 import { detailCartItem } from "@/utils/detailCartItems";
-import { NextResponse } from "next/server";
 
 export default async function orderPayment(req, res) {
     await connectToDatabase()
@@ -55,7 +54,7 @@ export default async function orderPayment(req, res) {
             order.status = req.body.status
             await user.save()
 
-            return NextResponse.redirect(new URL('/v1', req.url))
+            return res.status(200).json({ message: 'Pesanan diperbaharui' })
         }
 
         return res.status(403).json({ message: 'Method not allowed' })

@@ -21,7 +21,10 @@ export default function OrderDetail(props){
         if(transactionToken && window.snap){
             window.snap.pay(transactionToken, {
                 onSuccess: async function () {
-                    await axiosIntelence.put(`/api/user/orders/${order._id}`, { status: 'diproses'})
+                    const response = await axiosIntelence.put(`/api/user/orders/${order._id}`, { status: 'diproses'})
+                    if (response.status === 200) {
+                        router.push('/v1')
+                    }
                 },
                 onPending: function (result) {
                   console.log('Payment pending:', result);

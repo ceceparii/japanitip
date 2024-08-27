@@ -1,82 +1,49 @@
 import { NextResponse } from 'next/server';
-import { jwtVerify } from 'jose';
+import { verifyToken } from './utils/verifyToken';
 
-const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env
+const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = process.env;
 
-async function verifyToken(token, secretKey) {
-    try {
-        const { payload } = await jwtVerify(
-            token,
-            new TextEncoder().encode(secretKey)
-        );
-        return payload;
-    } catch (error) {
-        console.error('verify failed', error);
-        return null;
-    }
-}
-
-export async function middleware(req, res) {
+export async function middleware(req) {
     const url = req.nextUrl;
     const response = NextResponse.next();
-    const allowedOrigin = [
-        process.env.BASE_URL,
-        'https://app.sandbox.midtrans.com'
-    ]
+    const autHeader = req.headers.get('authorization');
+    const authToken = autHeader?.split(' ')[1];
+    const refreshToken = req.cookies.get('auth');
 
-    let autHeader = req.headers.get('authorization');
-    let authToken = autHeader?.split(' ')[1];
-    let refreshToken = req.cookies.get('auth')
-    
     // validate origin
-    if (allowedOrigin.includes(url.origin)) {
-        return NextResponse.json(
-            { status: 404 },
-            { message: `${url.origin} is not allowed` }
-        );
+    if (url.origin !== process.env.BASE_URL) {
+        return NextResponse.redirect(new URL('/404', req.url))
+    }
+    // validate token
+    if (!refreshToken || refreshToken.value === 'null') {
+        return NextResponse.redirect(new URL('/login', req.url));
     }
 
-    // validate token
-    if(refreshToken === null || !refreshToken ){
-        return NextResponse.redirect(new URL('/login', process.env.BASE_URL))
-    }
-    
     try {
         if (authToken) {
-            authToken = await verifyToken(authToken, ACCESS_TOKEN_SECRET);
-            response.headers.set('id', authToken._userID);
-            response.headers.set('role', authToken.role);
-            
+            const payload = await verifyToken(authToken, ACCESS_TOKEN_SECRET);
+            response.headers.set('id', payload._userID);
+            response.headers.set('role', payload.role);
+
             return response;
         }
 
-        if(url.pathname.startsWith('/admin')) {
-            refreshToken = await verifyToken(refreshToken.value, REFRESH_TOKEN_SECRET);
-            
-            if(refreshToken) {
-                if(refreshToken.role !== 'admin') {
-                    return res.sendStatus(404)
-                }
-                
-                response.headers.set('id', refreshToken._userID);
-                response.headers.set('role', refreshToken.role);
-                
-                return response;
+        const payload = await verifyToken(refreshToken.value, REFRESH_TOKEN_SECRET );
+
+        if (!payload) {
+            return NextResponse.redirect(new URL('/login', req.url));
+        }
+
+        if (url.pathname.startsWith('/admin')) {
+            if (payload.role !== 'admin') {
+                return NextResponse.redirect(new URL('/404', req.url));
             }
         }
-        
-        if(url.pathname.startsWith('/v1/user')) {
-            refreshToken = await verifyToken(refreshToken.value, REFRESH_TOKEN_SECRET);
-            
-            if(refreshToken) {
-                response.headers.set('id', refreshToken._userID);
-                response.headers.set('role', refreshToken.role);
-                
-                return response;
-            }
-        }
-        
-        return NextResponse.redirect(new URL('/login', process.env.BASE_URL))
+
+        response.headers.set('id', payload._userID);
+        response.headers.set('role', payload.role);
+
+        return response;
     } catch (error) {
         console.error('middleware', error);
         return NextResponse.json(
@@ -87,11 +54,5 @@ export async function middleware(req, res) {
 }
 
 export const config = {
-    matcher: [
-        '/api/user/:path*',
-        '/api/admin/:path*',
-        '/v1/user/:path*',
-        '/admin',
-        '/admin/:path*'
-    ],
+    matcher: ['/v1/user/:path*', '/admin/:path*', '/api/user/:path*', '/api/admin/:path*'],
 };

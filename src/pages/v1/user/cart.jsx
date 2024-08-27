@@ -96,8 +96,8 @@ function CartPage() {
 
     return (
             <>
-                {result.length > 0 ? (
-                    result.map((item, index) => (
+                {result?.length > 0 ? (
+                    result?.map((item, index) => (
                         <CartCard
                             key={item._id}
                             deleteHandler={deleteHandler}
